@@ -1,114 +1,91 @@
 package com.example.mibu.encryptedsmsapp;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
+import android.graphics.Typeface;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
+
 
 /**
- * Created by Mibu on 27-Apr-16.
+ * Created by Mibu on 05-May-16.
  */
-public class SMS_Adapter extends ArrayAdapter implements View.OnClickListener {
+public class Conversation_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<Conversation> conversationlist;
+    private Context context;
 
-    private Activity context;
-    //private String[] msgs;
-    //private final String[] addresses;
-    //private final String[] threads;
-    Conversation tempValues = null;
-    private static LayoutInflater inflater=null;
-
-    static class ViewHolder {
-        public TextView address;
-        public TextView text;
-        //public TextView thread;
-        public ImageView image;
+    public Conversation_Adapter(Context context, List<Conversation>list){
+        this.context=context;
+        this.conversationlist=list;
     }
 
-    private ArrayList conversations;
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
+        View view;
 
-    public SMS_Adapter (Activity context, ArrayList conversations ) {
-        super(context, R.layout.sms_row, conversations);
-        this.context = context;
-        this.conversations = conversations;
-        inflater = ( LayoutInflater )context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        view = LayoutInflater.from(context).inflate(R.layout.conversation_row, parent, false);
+        return new ConvViewHolder(view);
     }
 
-    public Object getItem(int position) {
-        return position;
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Conversation object = conversationlist.get(position);
+        if (object !=null) {
+
+            ((ConvViewHolder)holder).address.setText(object.getAddress());
+            ((ConvViewHolder)holder).message.setText(object.getMessage());
+            ((ConvViewHolder)holder).timestamp.setText(object.getTimestamp());
+            ((ConvViewHolder)holder).image.setImageBitmap(object.getImage());
+
+        }
     }
 
     public long getItemId(int position) {
         return position;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = convertView;
-        ViewHolder holder;
-        if (rowView == null) {
-            LayoutInflater inflater = context.getLayoutInflater();
-            rowView = inflater.inflate(R.layout.sms_row, null);
-
-            holder = new ViewHolder();
-            holder.address = (TextView) rowView.findViewById(R.id.addressv);
-            holder.text = (TextView) rowView.findViewById(R.id.messagev);
-            //holder.thread = (TextView) rowView.findViewById(R.id.threadv);
-            holder.image = (ImageView) rowView.findViewById(R.id.conpic);
-            rowView.setTag(holder);
-        }
-        else{
-            holder = (ViewHolder) rowView.getTag();
-        }
-
-        if(conversations.size()<=0)
-        {
-            holder.address.setText("No Data");
-
-        }
-        else {
-
-            tempValues = null;
-            tempValues = (Conversation) conversations.get(position);
-            holder.address.setText(tempValues.getAddress());
-            holder.text.setText(tempValues.getMessage());
-            //holder.thread.setText(tempValues.getThread());
-            holder.image.setImageBitmap(tempValues.getImage());
-
-            rowView.setOnClickListener(new OnItemClickListener(position));
-        }
-
-        return rowView;
-    }
-    @Override
-    public void onClick(View v) {
-        Log.v("SMS_Adapter", "Row button clicked");
+    public Object getItem(int position) {
+        return conversationlist.get(position);
     }
 
-    private class OnItemClickListener  implements View.OnClickListener {
-        private int mPosition;
+    @Override
+    public int getItemCount() {
+        if (conversationlist==null)
+            return 0;
+        return conversationlist.size();
+    }
 
-        OnItemClickListener(int position){
-            mPosition = position;
+    public class ConvViewHolder extends RecyclerView.ViewHolder {
+        private TextView address;
+        private TextView message;
+        private TextView timestamp;
+        private ImageView image;
+
+        public ConvViewHolder(View itemView){
+            super(itemView);
+            Typeface courier = Typeface.createFromAsset(itemView.getContext().getAssets(), "cour.ttf");
+            address = (TextView) itemView.findViewById(R.id.addressv);
+            address.setTypeface(courier);
+            message = (TextView) itemView.findViewById(R.id.messagev);
+            message.setTypeface(courier);
+            timestamp = (TextView) itemView.findViewById(R.id.convtime);
+            timestamp.setTypeface(courier);
+            image = (ImageView) itemView.findViewById(R.id.conpic);
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    int mPosition = getAdapterPosition();
+                    Conversation_Activity sct = (Conversation_Activity)context;
+                    sct.onItemClick(mPosition);
+                }
+            });
         }
 
-        @Override
-        public void onClick(View arg0) {
-
-
-            Conversation_Activity sct = (Conversation_Activity)context;
-
-            /****  Call  onItemClick Method inside CustomListViewAndroidExample Class ( See Below )****/
-
-            sct.onItemClick(mPosition);
-        }
     }
 
 }
