@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/conpic"
+        />
+    <TextView
+        android:layout_width="45dp"
+        android:layout_height="59dp"
+        android:textSize="9sp"
+        android:gravity="center_vertical"
+        android:id="@+id/convtime"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/darkgrey"
+        android:textColor="@color/lightorange"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_toRightOf="@id/conpic"
+        android:layout_toLeftOf="@id/convtime"
+        android:background="@color/darkgrey">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="24dp"
+        android:id="@+id/addressv"
+        android:singleLine="true"
+        android:textSize= "18sp"
+        android:layout_marginTop= "5dp"
+        android:layout_marginLeft="4dp"
+        android:layout_gravity="left|center_vertical"
+        android:textColor="@color/lightorange" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:layout_below="@+id/addressv"
+        android:ems="10"
+        android:id="@+id/messagev"
+        android:singleLine="true"
+        android:textSize= "15sp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="4dp"
+        android:layout_gravity="left|center_vertical"
+        android:textColor="@color/lightorange"
+
+        />
+    </RelativeLayout>
+
+</RelativeLayout>
