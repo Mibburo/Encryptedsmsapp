@@ -1,3 +1,5 @@
+package com.example.mibu.encryptedsmsapp;
+
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Typeface;
