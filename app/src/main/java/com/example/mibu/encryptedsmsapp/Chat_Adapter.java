@@ -1,122 +1,130 @@
 package com.example.mibu.encryptedsmsapp;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
+import android.graphics.Typeface;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.mibu.recyclertesttake3.Chat_Message.TYPE_LEFT;
+import static com.example.mibu.recyclertesttake3.Chat_Message.TYPE_RIGHT;
+
 
 /**
- * Created by Mibu on 27-Apr-16.
+ * Created by Mibu on 30-Apr-16.
  */
-public class Chat_Adapter extends ArrayAdapter implements View.OnClickListener {
+public class Chat_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<Chat_Message> chatmessagelist;
+    private Context context;
 
-    private Activity context;
-    Chat_Message tempValues = null;
-    private static LayoutInflater inflater=null;
-
-    static class ViewHolder {
-        public TextView text;
-        public TextView timestamp;
-        public ImageView image;
+    public Chat_Adapter(Context context, List<Chat_Message>list){
+        this.context=context;
+        this.chatmessagelist=list;
     }
 
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
+        View view;
 
-    private ArrayList<Chat_Message> chat;
-
-    public Chat_Adapter (Activity context, ArrayList chat ) {
-        super(context, R.layout.chat_row, chat);
-        this.context = context;
-        this.chat = chat;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        switch (viewType) {
+            case TYPE_LEFT:
+                view = LayoutInflater.from(context).inflate(R.layout.chat_row, parent, false);
+                return new LeftViewHolder(view);
+            case TYPE_RIGHT:
+                view = LayoutInflater.from(context).inflate(R.layout.chat_row_right, parent, false);
+                return new RightViewHolder(view);
+        }
+        return null;
     }
 
-    public Object getItem(int position) {
-        return position;
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Chat_Message object = chatmessagelist.get(position);
+        if (object !=null) {
+            switch (object.getType()) {
+                case TYPE_LEFT:
+                    ((LeftViewHolder)holder).message.setText(object.getMessage());
+                    ((LeftViewHolder)holder).timestamp.setText(object.getTimestamp());
+                    break;
+                case TYPE_RIGHT:
+                    ((RightViewHolder)holder).message.setText(object.getMessage());
+                    ((RightViewHolder)holder).timestamp.setText(object.getTimestamp());
+                    break;
+            }
+        }
     }
 
     public long getItemId(int position) {
         return position;
     }
 
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = convertView;
-        ViewHolder holder;
-
-        tempValues = null;
-        tempValues = chat.get(position);
-        if (rowView == null) {
-            holder = new ViewHolder();
-
-            if (tempValues.getLeft()== 1 ){
-                LayoutInflater inflater = context.getLayoutInflater();
-                rowView = inflater.inflate(R.layout.chat_row, null);
-                //holder = new ViewHolder();
-                holder.text = (TextView) rowView.findViewById(R.id.chatview);
-                holder.timestamp = (TextView) rowView.findViewById(R.id.timestamp);
-                holder.image = (ImageView) rowView.findViewById(R.id.icon);
-                rowView.setTag(holder);
-            }
-            else {
-                LayoutInflater inflater = context.getLayoutInflater();
-                rowView = inflater.inflate(R.layout.chat_row_right, null);
-                //holder = new ViewHolder();
-                holder.text = (TextView) rowView.findViewById(R.id.chatview);
-                holder.timestamp = (TextView) rowView.findViewById(R.id.timestamp);
-                holder.image = (ImageView) rowView.findViewById(R.id.icon);
-                rowView.setTag(holder);
-            }
-        }
-        else{
-            holder = (ViewHolder) rowView.getTag();
-        }
-
-        if(chat.size()<=0)
-        {
-            holder.text.setText("No Data");
-
-        }
-        else {
-
-
-            holder.text.setText(tempValues.getMessage());
-            holder.timestamp.setText(tempValues.getTimestamp());
-            holder.image.setImageBitmap(tempValues.getImage());
-
-            rowView.setOnClickListener(new OnItemClickListener(position));
-        }
-
-        return rowView;
+    public int getItemCount() {
+        if (chatmessagelist==null)
+            return 0;
+        return chatmessagelist.size();
     }
 
     @Override
-    public void onClick(View v) {
-        Log.v("Chat_Adapter", "Row button clicked");
+    public int getItemViewType(int position) {
+        if (chatmessagelist != null) {
+            Chat_Message object = chatmessagelist.get(position);
+            if (object != null) {
+                return object.getType();
+            }
+        }
+        return 0;
     }
 
-    private class OnItemClickListener  implements View.OnClickListener {
-        private int mPosition;
+    public class LeftViewHolder extends RecyclerView.ViewHolder {
 
-        OnItemClickListener(int position){
-            mPosition = position;
+        private TextView message;
+        private TextView timestamp;
+
+        public LeftViewHolder(View itemView){
+            super(itemView);
+
+            Typeface courier = Typeface.createFromAsset(itemView.getContext().getAssets(), "cour.ttf");
+            message = (TextView) itemView.findViewById(R.id.chatview);
+            message.setTypeface(courier);
+            timestamp = (TextView) itemView.findViewById(R.id.timestamp);
+            timestamp.setTypeface(courier);
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    int mPosition = getAdapterPosition();
+                    Chat_Activity sct = (Chat_Activity)context;
+                    sct.onItemClick(mPosition);
+                }
+            });
         }
 
-        @Override
-        public void onClick(View arg0) {
+    }
 
+    public class RightViewHolder extends RecyclerView.ViewHolder {
+        private TextView message;
+        private TextView timestamp;
 
-            Chat_Activity sct = (Chat_Activity)context;
-
-            /****  Call  onItemClick Method inside CustomListViewAndroidExample Class ( See Below )****/
-
-            sct.onItemClick(mPosition);
+        public RightViewHolder(View itemView){
+            super(itemView);
+            Typeface courier = Typeface.createFromAsset(itemView.getContext().getAssets(), "cour.ttf");
+            message = (TextView) itemView.findViewById(R.id.chatviewright);
+            message.setTypeface(courier);
+            timestamp = (TextView) itemView.findViewById(R.id.timestampright);
+            timestamp.setTypeface(courier);
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    int mPosition = getAdapterPosition();
+                    Chat_Activity sct = (Chat_Activity)context;
+                    sct.onItemClick(mPosition);
+                }
+            });
         }
     }
 
