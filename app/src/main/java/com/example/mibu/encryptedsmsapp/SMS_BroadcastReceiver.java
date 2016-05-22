@@ -8,7 +8,7 @@ import android.telephony.SmsMessage;
 import android.widget.Toast;
 
 /**
- * Created by Mibu on 27-Apr-16.
+ * Created by Mibu on 30-Apr-16.
  */
 public class SMS_BroadcastReceiver extends BroadcastReceiver {
 
@@ -34,11 +34,8 @@ public class SMS_BroadcastReceiver extends BroadcastReceiver {
             Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
 
             //this will update the UI with message
-            Chat_Activity ch_inst = Chat_Activity.instance();
-            ch_inst.updateList(smsMessageStr);
-            Conversation_Activity conv_inst = Conversation_Activity.instance();
-            conv_inst.updateList();
-
+            Chat_Activity.getInstance().updateList(smsAddress,smsMessageStr);
+            Conversation_Activity.getInstance().updateList(smsAddress, smsMessageStr);
         }
     }
 }
