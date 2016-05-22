@@ -4,5 +4,15 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
+    
+    <style name="AppTheme.NoBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorAccent">@color/lightorange</item>
+    </style>
+
+    <style name="AppTheme.CustomTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="colorAccent">@color/lightorange</item>
+    </style>
 
 </resources>
