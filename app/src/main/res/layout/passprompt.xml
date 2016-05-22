@@ -1,24 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:background="@color/black">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/gradientbartwo"
+        >
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/passheader"
+        android:text="@string/passwindow_header"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/lightorange"
+        android:textSize="22sp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        />
+    </RelativeLayout>
+
 
     <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/decpass"/>
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:inputType="textPassword"
+        android:hint="@string/enterpasshint"
+        android:id="@+id/decpass"
+        android:background="@color/darkgrey"
+        android:textColor="@color/lightorange"
+        android:layout_margin="5dp"
+        />
+
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/decbutton"
-        android:text="Decrypt"/>
+        android:text="Decrypt"
+        android:layout_gravity="center_horizontal"
+        />
 
     <TextView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/decview"
-        android:layout_weight="0.31" />
+        android:layout_weight="0.31"
+        android:background="@color/darkgrey"
+        android:textColor="@color/lightorange"
+        android:textSize="20sp"
+        android:layout_margin="5dp"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/replacebutton"
+        android:text="@string/replace_button"/>
 
 </LinearLayout>
