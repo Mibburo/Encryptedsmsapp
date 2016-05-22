@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
+    android:layout_gravity="right|end"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginRight="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginLeft="65dp"
+    android:layout_marginStart="65dp"
+    >
 
-    android:background="@color/darkgray">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_gravity="right"
+
+    <TextView
+        android:id="@+id/chatviewright"
+        android:layout_gravity="right|end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-
-        android:layout_marginTop= "5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/bubble_right_grey"
+        android:textSize= "20sp"
+        android:textColor="@color/green4"
 
         />
 
     <TextView
-        android:id="@+id/chatview"
-        android:layout_gravity="right"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop= "5dp"
-        android:layout_toLeftOf="@id/icon"
-        android:textColor="#F9E79F"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:id="@+id/timestamp"
-        android:layout_toLeftOf="@id/icon"
-        android:layout_below="@+id/chatview"
+        android:layout_height="15dp"
+        android:layout_gravity="right|end"
+        android:id="@+id/timestampright"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/chatviewright"
         android:layout_marginTop= "2.5dp"
         android:layout_marginBottom="5dp"
-        android:textColor="@color/lightgray"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/lightgrey"
         android:textSize= "9sp"
         />
 
