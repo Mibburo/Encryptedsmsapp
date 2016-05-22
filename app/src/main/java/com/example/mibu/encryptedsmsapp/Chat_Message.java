@@ -1,16 +1,35 @@
 package com.example.mibu.encryptedsmsapp;
 
-import android.graphics.Bitmap;
 
 /**
- * Created by Mibu on 27-Apr-16.
+ * Created by Mibu on 30-Apr-16.
  */
 public class Chat_Message {
 
-    public String message= "";
-    public String timestamp= "";
-    public Bitmap image = null;
-    public int left;
+    public static final int TYPE_LEFT = 0;
+    public static final int TYPE_RIGHT = 1;
+
+    public String address;
+    public String message;
+    public String timestamp;
+    public int type;
+
+    public Chat_Message (String address,String message, String timestamp, int type){
+        this.address = address;
+        this.message = message;
+        this.timestamp = timestamp;
+        this.type = type;
+    }
+
+    public String getAddress(){
+
+        return address;
+    }
+
+    public void setAddress(String address) {
+
+        this.address = address;
+    }
 
     public String getMessage(){
 
@@ -32,21 +51,12 @@ public class Chat_Message {
         this.timestamp = timestamp;
     }
 
-    public void setImage(Bitmap image)
-    {
-        this.image = image;
+
+    public int getType(){
+        return type;
     }
 
-    public Bitmap getImage()
-    {
-        return image;
-    }
-
-    public int getLeft(){
-        return left;
-    }
-
-    public void setLeft(int left) {
-        this.left = left;
+    public void setType(int type) {
+        this.type = type;
     }
 }
